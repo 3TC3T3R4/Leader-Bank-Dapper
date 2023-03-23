@@ -18,10 +18,15 @@ builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(C
 
 builder.Services.AddScoped<ICustomerUseCase, CustomerUseCase>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
 builder.Services.AddScoped<IAccountUseCase, AccountUseCase>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
 builder.Services.AddScoped<ITransactionUseCase, TransactionUseCase>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+builder.Services.AddScoped<ICardUseCase, CardUseCase>();
+builder.Services.AddScoped<ICardRepository, CardRepository>();
 
 builder.Services.AddTransient<IDbConnectionBuilder>(e =>
 {
