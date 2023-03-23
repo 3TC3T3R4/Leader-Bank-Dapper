@@ -1,5 +1,8 @@
 using AutoMapper.Data;
 using leader.bank.api.AutoMapper;
+using leader.bank.domain.usecases.Gateways;
+using leader.bank.domain.usecases.Gateways.Repositories;
+using leader.bank.domain.usecases.UseCases;
 using leader.bank.infrastructure.Gateway;
 using leader.bank.infrastructure.SqlAdapter;
 
@@ -13,7 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(ConfigurationProfile));
 
-
+builder.Services.AddScoped<IAccountUseCase, AccountUseCase>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 
 
