@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "leader.bank.domain.usecases
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "leader.bank.infrastructure", "leader.bank.infrastructure\leader.bank.infrastructure.csproj", "{8B870DD8-83EA-483E-AEFB-4C94EF0FEB37}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "leader.bank.test", "leader.bank.test", "{D62B01B7-C4B8-4BFA-A702-430D74F01287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "leader.bank.test", "leader.bank.test\leader.bank.test.csproj", "{FC7EE453-BE3E-4D90-9734-C2562FEB3B9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{8B870DD8-83EA-483E-AEFB-4C94EF0FEB37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B870DD8-83EA-483E-AEFB-4C94EF0FEB37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B870DD8-83EA-483E-AEFB-4C94EF0FEB37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC7EE453-BE3E-4D90-9734-C2562FEB3B9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC7EE453-BE3E-4D90-9734-C2562FEB3B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC7EE453-BE3E-4D90-9734-C2562FEB3B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC7EE453-BE3E-4D90-9734-C2562FEB3B9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{FAD86BE3-CCEE-4F30-8FD2-72AB33F445E8} = {0CA367FF-CBCE-4AA2-BA8F-A6BF124AADE1}
 		{E7F0FBC2-41DA-4E93-B5CC-A495047CB680} = {C3D74417-66C2-4DEB-8A81-49B649B71DA1}
 		{8B870DD8-83EA-483E-AEFB-4C94EF0FEB37} = {54C63C7E-3C8A-4F35-9B8D-5C795B1A632C}
+		{FC7EE453-BE3E-4D90-9734-C2562FEB3B9F} = {D62B01B7-C4B8-4BFA-A702-430D74F01287}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9104E3D-E9AC-4769-BA02-F124557687D8}
