@@ -1,4 +1,5 @@
-﻿using leader.bank.domain.Entities;
+﻿using leader.bank.domain.Commands;
+using leader.bank.domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace leader.bank.domain.usecases.Gateways
     public interface ITransactionUseCase
     {
 
-        Task<Transaction> AddTransaction(Transaction transaction);
+        Task<InsertNewTransaction> AddTransaction(Transaction transaction);
 
         Task<List<Transaction>> GetTransaction();
 

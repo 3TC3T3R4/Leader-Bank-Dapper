@@ -29,12 +29,9 @@ namespace leader.bank.api.Controllers
         }
 
         [HttpPost]
-        public async Task<Transaction> CreateTransactionAsync([FromBody] InsertNewTransaction command)
+        public async Task<InsertNewTransaction> CreateTransactionAsync([FromBody] InsertNewTransaction command)
         {
             return await _transactionUseCase.AddTransaction(_mapper.Map<Transaction>(command));
         }
-
-
-
     }
 }

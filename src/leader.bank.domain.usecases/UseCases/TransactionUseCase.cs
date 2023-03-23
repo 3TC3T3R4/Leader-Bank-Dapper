@@ -1,4 +1,5 @@
-﻿using leader.bank.domain.Entities;
+﻿using leader.bank.domain.Commands;
+using leader.bank.domain.Entities;
 using leader.bank.domain.usecases.Gateways;
 using leader.bank.domain.usecases.Gateways.Repositories;
 using System;
@@ -21,7 +22,7 @@ namespace leader.bank.domain.usecases.UseCases
         }
 
 
-        public async Task<Transaction> AddTransaction(Transaction transaction) {
+        public async Task<InsertNewTransaction> AddTransaction(Transaction transaction) {
 
 
             return await _transactionRepository.CreateTransactionAsync(transaction);

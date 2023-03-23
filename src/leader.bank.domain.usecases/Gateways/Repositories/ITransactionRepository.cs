@@ -1,9 +1,5 @@
-﻿using leader.bank.domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using leader.bank.domain.Commands;
+using leader.bank.domain.Entities;
 
 namespace leader.bank.domain.usecases.Gateways.Repositories
 {
@@ -11,7 +7,7 @@ namespace leader.bank.domain.usecases.Gateways.Repositories
     {
 
 
-        Task<Transaction> CreateTransactionAsync(Transaction transaction);
+        Task<InsertNewTransaction> CreateTransactionAsync(Transaction transaction);
 
         Task<List<Transaction>> GetTransactionAsync();
 
