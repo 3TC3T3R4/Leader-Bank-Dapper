@@ -25,9 +25,9 @@ namespace leader.bank.domain.usecases.UseCases
             return await _customerRepository.GetCustomersAsync();
         }
 
-        public async Task<Customer> GetCustomerByIdAsync(int id)
+        public async Task<List<CustomerWithAccountAndCard>> GetCustomerWithAccountAndCard(int id)
         {
-            return await _customerRepository.GetCustomerByIdAsync(id);
+            return await _customerRepository.GetCustomerWithAccountAndCard(id);
         }
 
         public async Task<InsertNewCustomer> CreateCustomerAsync(Customer customer)

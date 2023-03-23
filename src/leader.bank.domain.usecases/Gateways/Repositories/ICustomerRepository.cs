@@ -13,7 +13,7 @@ namespace leader.bank.domain.usecases.Gateways.Repositories
     {
         Task<List<Customer>> GetCustomersAsync();
 
-        Task<Customer> GetCustomerByIdAsync(int id);
+        Task<List<CustomerWithAccountAndCard>> GetCustomerWithAccountAndCard(int id);
 
         Task<InsertNewCustomer> CreateCustomerAsync(Customer customer);
 

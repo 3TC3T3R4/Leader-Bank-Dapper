@@ -38,10 +38,10 @@ namespace leader.bank.api.Controllers
         }
 
         [HttpGet]
-        [Route("GetCustomerById")]
-        public async Task<Customer> GetCustomerByIdAsync(int id)
+        [Route("GetCustomerWithAccountAndCard")]
+        public async Task<List<CustomerWithAccountAndCard>> GetCustomerWithAccountAndCard(int id)
         {
-            return await _customerUseCase.GetCustomerByIdAsync(id);
+            return await _customerUseCase.GetCustomerWithAccountAndCard(id);
         }
 
       
@@ -51,5 +51,7 @@ namespace leader.bank.api.Controllers
         {
             return await _customerUseCase.GetCustomerWithAccountsAsync(id);
         }
+
+
     }
 }

@@ -62,14 +62,31 @@ namespace leader.bank.infrastructure.SqlAdapter
 
         }
 
-        public async Task<Customer> GetCustomerByIdAsync(int id)
+        public async Task<List<CustomerWithAccountAndCard>> GetCustomerWithAccountAndCard(int id)
         {
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
-            string sqlQuery = $"SELECT * FROM {tableName} WHERE Customer_Id = @id";
-            var result = await connection.QuerySingleAsync<Customer>(sqlQuery, new { id });
+            string sqlQuery = $"SELECT * FROM {tableName} cus " +
+                                $"INNER JOIN Accounts a ON a.Id_Customer = @id " +
+                                $"INNER JOIN Cards c ON c.Id_Account = a.Account_Id " +
+                                $"WHERE cus.Customer_Id = @id";
+            var customer = await connection.QueryAsync<CustomerWithAccountAndCard, AccountWithCardOnly,
+                Card, CustomerWithAccountAndCard>(sqlQuery, (c, a, card) =>
+            {
+                c.Account = a;
+                c.Account.Card = card;
+                return c;
+            },
+            new { id },
+            splitOn: "Account_Id, Card_Id");
+
+            if (customer.IsNullOrEmpty())
+            {
+                throw new Exception("The customer doesn't exist.");
+            }
             connection.Close();
-            return result;
+            return customer.ToList();
         }
+
 
         public async Task<CustomerWithAccountsOnly> GetCustomerWithAccountsAsync(int id)
         {
