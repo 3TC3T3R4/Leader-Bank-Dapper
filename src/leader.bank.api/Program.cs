@@ -28,6 +28,20 @@ builder.Services.AddTransient<IDbConnectionBuilder>(e =>
     return new DbConnectionBuilder(builder.Configuration.GetConnectionString("urlConnection"));
 });
 
+
+builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(ConfigurationProfile));
+
+
+
+builder.Services.AddScoped<ITransactionUseCase, TransactionUseCase>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+builder.Services.AddTransient<IDbConnectionBuilder>(e =>
+{
+    return new DbConnectionBuilder(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
