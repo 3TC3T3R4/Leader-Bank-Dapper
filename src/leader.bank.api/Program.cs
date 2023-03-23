@@ -1,3 +1,8 @@
+using AutoMapper.Data;
+using leader.bank.api.AutoMapper;
+using leader.bank.infrastructure.Gateway;
+using leader.bank.infrastructure.SqlAdapter;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +11,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(ConfigurationProfile));
+
+
+
+
+
+builder.Services.AddTransient<IDbConnectionBuilder>(e =>
+{
+    return new DbConnectionBuilder(builder.Configuration.GetConnectionString("urlConnection"));
+});
 
 var app = builder.Build();
 
