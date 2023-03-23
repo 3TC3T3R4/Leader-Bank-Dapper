@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace leader.bank.domain.Entities.Wrappers
 {
-    public class SupportStaffWithBranches
+    public class BranchesWithSupportStaff
     {
         public int Id { get; set; }
         public string Name { get; set; }

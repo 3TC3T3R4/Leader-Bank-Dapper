@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace leader.bank.domain.Entities.Wrappers
 {
-    public class ProductsWithCustomers
+   public class CustomersWithAccounts
     {
         public int Id { get; set; }
-        public string ProductType { get; set; }
-        public string ProductState { get; set; }
-        public string Descripction { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime DeadlineDate { get; set; }
+        public string AccountType { get; set; }
+        public string AccountState { get; set; }
+        public decimal Balance { get; set; }
+        public DateTime OpenDate { get; set; }
+        public DateTime CloseDate { get; set; }
         public decimal InterestRate { get; set; }
         public Customers Customers { get; set; }
-
 
 
 
