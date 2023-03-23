@@ -19,7 +19,6 @@ namespace leader.bank.domain.Entities.Wrappers
         public decimal FinalBalance { get; set; }
         public CustomerWithAccounts Accounts { get; set; }
         public Card Cards { get; set; }
-        public CustomersWithProducts Products { get; set; }
-        public SupportStaff SupportStaff { get; set; }
+      
     }
 }
