@@ -32,7 +32,7 @@ namespace leader.bank.domain.Entities
             }
             if (customer.Address == null)
             {
-                throw new ArgumentNullException("The adress type is required.");
+                throw new ArgumentNullException("The address type is required.");
             }
             if (customer.Email == null)
             {
@@ -40,7 +40,7 @@ namespace leader.bank.domain.Entities
             }
             if (customer.Phone == null)
             {
-                throw new ArgumentNullException("The phone type is required.");
+                throw new ArgumentNullException("The name phone is required.");
             }
             if (customer.Birthdate == null)
             {
@@ -52,10 +52,13 @@ namespace leader.bank.domain.Entities
             }
             if (customer.Gender == null)
             {
-                throw new ArgumentNullException("The Gender type is required.");
+                throw new ArgumentNullException("The gender type is required.");
             }
-
         }
 
+
     }
+
+
+
 }
