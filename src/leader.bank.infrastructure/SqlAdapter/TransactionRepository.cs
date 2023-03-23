@@ -38,10 +38,10 @@ namespace leader.bank.infrastructure.SqlAdapter
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
             var transactionAAgregar = new
             {
-                id = transaction.Transaction_Id  ,
+                
                 idAccount = transaction.Id_Account,
-                transactionDate = transaction.TransactionDate,
-                transactionHour = transaction.TransactionHour,
+                transactionDate = DateTime.Now.ToString("MM/dd/yyyy"),
+                transactionHour = DateTime.Now.ToString("H:mm"),
                 transacitonType = transaction.TransactionType,
                 description = transaction.Description,
                 amount = transaction.Amount,
@@ -49,7 +49,7 @@ namespace leader.bank.infrastructure.SqlAdapter
                 finalBalance = transaction.FinalBalance,
                 transactionState = transaction.TransactionState
             };
-            string sqlQuery = $"INSERT INTO {tableName} (Id_Account, TransactionDate,TransactionHour,TransactionType,Description,Amount,OldBalance,FinalBalance,TransactionState)VALUES(@id, @ idAccount, @transactionDate, @transactionHour,@transacitonType,@description,@amount,@oldBalance,@finalBalance,@transactionState)";
+            string sqlQuery = $"INSERT INTO {tableName} (Id_Account, TransactionDate,TransactionHour,TransactionType,Description,Amount,OldBalance,FinalBalance,TransactionState)VALUES(@idAccount, @transactionDate, @transactionHour,@transacitonType,@description,@amount,@oldBalance,@finalBalance,@transactionState)";
             var rows = await connection.ExecuteAsync(sqlQuery, transactionAAgregar);
             return transaction;
         }
