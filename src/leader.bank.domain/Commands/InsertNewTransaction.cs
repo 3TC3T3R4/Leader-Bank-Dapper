@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace leader.bank.domain.Entities
+namespace leader.bank.domain.Commands
 {
-    public class Transactions
+    public class InsertNewTransaction
     {
-        public int Transaction_Id { get; set; }
-        public int Id_Account { get; set; }       
+        public int Id_Account { get; set; }
         public DateOnly TransactionDate { get; set; }
         public TimeOnly TransactionHour { get; set; }
         public string TransactionType { get; set; }
@@ -18,6 +17,5 @@ namespace leader.bank.domain.Entities
         public decimal OldBalance { get; set; }
         public decimal FinalBalance { get; set; }
         public string TransactionState { get; set; }
-       
     }
 }

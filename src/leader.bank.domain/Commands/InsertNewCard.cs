@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace leader.bank.domain.Commands
 {
-    public class InsertNewCards
+    public class InsertNewCard
     {
-        public string CardType { get; set; }
-        public string CardState { get; set; }
-        public decimal Quota { get; set; }
+        public int Id_Account { get; set; }
+        public string NumberCard { get; set; }
+        public string Cvc { get; set; }
         public DateTime EmissionDate { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public decimal CreditLimit { get; set; }
-        public int Id_Customers { get; set; }
+        public string CardState { get; set; }
     }
 }

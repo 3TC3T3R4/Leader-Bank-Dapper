@@ -8,14 +8,14 @@ namespace leader.bank.domain.Entities
 {
     public class Accounts
     {
-        public int Id { get; set; }
-        public string AccountType { get; set; }
-        public string AccountState { get; set; }
+        public int Account_Id { get; set; }
+        public int Id_Customer { get; set; }       
+        public string AccountType { get; set; }       
         public decimal Balance { get; set; }
         public DateTime OpenDate { get; set; }
-        public DateTime CloseDate { get; set; }
-        public decimal InterestRate { get; set; }
-        public int Id_Customers { get; set; }
-        
+        public DateTime CloseDate { get; set; }  
+        public decimal ManagementCost { get; set; }
+        public string AccountState { get; set; }
+
     }
 }
