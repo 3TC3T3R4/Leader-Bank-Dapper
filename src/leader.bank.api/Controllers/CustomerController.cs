@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using leader.bank.domain.Commands;
 using leader.bank.domain.Entities;
+using leader.bank.domain.Entities.Wrappers;
 using leader.bank.domain.usecases.Gateways;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
@@ -27,6 +28,14 @@ namespace leader.bank.api.Controllers
         {
             return await _customerUseCase.GetCustomersAsync();
         }
+               
+
+        [HttpPost]
+        [Route("CreateCustomer")]
+        public async Task<InsertNewCustomer> CreateCustomerAsync(InsertNewCustomer newCustomer)
+        {
+            return await _customerUseCase.CreateCustomerAsync(_mapper.Map<Customer>(newCustomer));
+        }
 
         [HttpGet]
         [Route("GetCustomerById")]
@@ -35,11 +44,12 @@ namespace leader.bank.api.Controllers
             return await _customerUseCase.GetCustomerByIdAsync(id);
         }
 
-        [HttpPost]
-        [Route("CreateCustomer")]
-        public async Task<InsertNewCustomer> CreateCustomerAsync(InsertNewCustomer newCustomer)
+      
+        [HttpGet]
+        [Route("GetCustomerWithAccounts")]
+        public async Task<CustomerWithAccountsOnly> GetCustomerWithAccountsAsync(int id)
         {
-            return await _customerUseCase.CreateCustomerAsync(_mapper.Map<Customer>(newCustomer));
+            return await _customerUseCase.GetCustomerWithAccountsAsync(id);
         }
     }
 }

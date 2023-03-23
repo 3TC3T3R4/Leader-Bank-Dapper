@@ -1,5 +1,6 @@
 ﻿using leader.bank.domain.Commands;
 using leader.bank.domain.Entities;
+using leader.bank.domain.Entities.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,8 @@ namespace leader.bank.domain.usecases.Gateways
         Task<Customer> GetCustomerByIdAsync(int id);
 
         Task<InsertNewCustomer> CreateCustomerAsync(Customer customer);
+
+        Task<CustomerWithAccountsOnly> GetCustomerWithAccountsAsync(int id);
 
     }
 }
