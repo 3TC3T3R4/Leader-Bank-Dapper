@@ -38,7 +38,7 @@ namespace leader.bank.infrastructure.SqlAdapter
                 Id_Customer = account.Id_Customer,
                 AccountType = account.AccountType,
                 Balance = account.Balance,
-                OpenDate = account.OpenDate,
+                OpenDate = DateTime.Now,
                 CloseDate = null,
                 ManagementCost = account.ManagementCost,
                 AccountState = account.AccountState,
