@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace leader.bank.domain.Entities
 {
-    public class Accounts
+    public class Account
     {
         public int Account_Id { get; set; }
         public int Id_Customer { get; set; }       
