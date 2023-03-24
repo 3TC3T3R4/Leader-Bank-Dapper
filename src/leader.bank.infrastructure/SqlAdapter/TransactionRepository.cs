@@ -5,6 +5,7 @@ using leader.bank.domain.Entities;
 using leader.bank.domain.Entities.Wrappers;
 using leader.bank.domain.usecases.Gateways.Repositories;
 using leader.bank.infrastructure.Gateway;
+using Microsoft.IdentityModel.Tokens;
 
 namespace leader.bank.infrastructure.SqlAdapter
 {
@@ -31,6 +32,13 @@ namespace leader.bank.infrastructure.SqlAdapter
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
             string sqlQuery = $"SELECT * FROM {tableName}";
             var result = await connection.QueryAsync<Transaction>(sqlQuery);
+            if
+          (
+              result.IsNullOrEmpty()
+          )
+            {
+                throw new Exception("No records found");
+            }
             connection.Close();
             return result.ToList();
         }
@@ -40,18 +48,19 @@ namespace leader.bank.infrastructure.SqlAdapter
         {
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
 
-            var transactionAAgregar = new
+            var transactionAAgregar = new Transaction
             {
-                idAccount = transaction.Id_Account,
-                transactionDate = DateTime.Now.ToString("MM/dd/yyyy"),
-                transactionHour = DateTime.Now.ToString("H:mm"),
-                transacitonType = transaction.TransactionType,
-                description = transaction.Description,
-                amount = transaction.Amount,
-                oldBalance = transaction.OldBalance,
-                finalBalance = transaction.FinalBalance,
-                transactionState = transaction.TransactionState
+                Id_Account = transaction.Id_Account,
+                TransactionDate = DateTime.Now.ToString("MM/dd/yyyy"),
+                TransactionHour = DateTime.Now.ToString("H:mm"),
+                TransactionType = transaction.TransactionType,
+                Description = transaction.Description,
+                Amount = transaction.Amount,
+                OldBalance = transaction.OldBalance,
+                FinalBalance = transaction.FinalBalance,
+                TransactionState = transaction.TransactionState
             };
+            Transaction.Validate(transactionAAgregar);
 
             string sqlQuery = $"INSERT INTO {tableName} (Id_Account, TransactionDate,TransactionHour,TransactionType,Description,Amount,OldBalance,FinalBalance,TransactionState)VALUES(@idAccount, @transactionDate, @transactionHour,@transacitonType,@description,@amount,@oldBalance,@finalBalance,@transactionState)";
             var rows = await connection.ExecuteAsync(sqlQuery, transactionAAgregar);
