@@ -31,10 +31,10 @@ namespace leader.bank.domain.usecases.UseCases
 
         }
 
-        public async Task<List<CustomerWithAccounts>> GetDoneTransactionById(int id)
-        {
-            return await _transactionRepository.GetDoneTransactionAsync(id);
-        }
+        //public async Task<List<CustomerWithAccounts>> GetDoneTransactionById(int id)
+        //{
+        //    return await _transactionRepository.GetDoneTransactionAsync(id);
+        //}
 
         public async Task<List<Transaction>> GetTransaction() {
             return await _transactionRepository.GetTransactionAsync();

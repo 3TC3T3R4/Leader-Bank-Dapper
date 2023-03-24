@@ -58,34 +58,34 @@ namespace leader.bank.infrastructure.SqlAdapter
             return _mapper.Map<InsertNewTransaction>(transaction);
         }
 
-        public async Task<List<CustomerWithAccounts>> GetDoneTransactionAsync(int id){
-            var connection = await _dbConnectionBuilder.CreateConnectionAsync();
-            var sqlQuery = $"SELECT  *  FROM {tableName4} cus " +
-                $"INNER JOIN  {tableName2} ac " +
-                $"ON  cus.Customer_Id  = ac.Id_Customer " +
-                 $" INNER JOIN {tableName3} car " +
-                 $" ON ac.Account_Id = car.Id_Account " +
-                 $"INNER JOIN {tableName} tra " +
-                 $"ON  tra.Id_Account = ac.Account_Id " +
-                $"WHERE  cus.Customer_Id = @id";
-            var customer = await connection.QueryAsync<CustomerWithAccounts,AccountWithCardAndTransactions,Card,Transaction, CustomerWithAccounts>(sqlQuery, (cwc,act ,card,t) =>
-               {
-                   cwc.Accounts = new List<AccountWithCardAndTransactions>();
-                   cwc.Accounts.Add(act);
-                   act.Card = card;
-                   act.Transactions = new List<Transaction>();
-                   act.Transactions.Add(t);
+        //public async Task<List<CustomerWithAccounts>> GetDoneTransactionAsync(int id){
+        //    var connection = await _dbConnectionBuilder.CreateConnectionAsync();
+        //    var sqlQuery = $"SELECT  *  FROM {tableName4} cus " +
+        //        $"INNER JOIN  {tableName2} ac " +
+        //        $"ON  cus.Customer_Id  = ac.Id_Customer " +
+        //         $" INNER JOIN {tableName3} car " +
+        //         $" ON ac.Account_Id = car.Id_Account " +
+        //         $"INNER JOIN {tableName} tra " +
+        //         $"ON  tra.Id_Account = ac.Account_Id " +
+        //        $"WHERE  cus.Customer_Id = @id";
+        //    var customer = await connection.QueryAsync<CustomerWithAccounts,AccountWithCardAndTransactions,Card,Transaction, CustomerWithAccounts>(sqlQuery, (cwc,act ,card,t) =>
+        //       {
+        //           cwc.Accounts = new List<AccountWithCardAndTransactions>();
+        //           cwc.Accounts.Add(act);
+        //           act.Card = card;
+        //           act.Transactions = new List<Transaction>();
+        //           act.Transactions.Add(t);
 
 
 
-                   return cwc;
+        //           return cwc;
 
-               },
-           new { id },
-           splitOn: "Account_Id , Card_Id , Transaction_Id");
-            connection.Close();
-            return  customer.ToList();
+        //       },
+        //   new { id },
+        //   splitOn: "Account_Id , Card_Id , Transaction_Id");
+        //    connection.Close();
+        //    return  customer.ToList();
 
-        }
+        //}
     }
 }

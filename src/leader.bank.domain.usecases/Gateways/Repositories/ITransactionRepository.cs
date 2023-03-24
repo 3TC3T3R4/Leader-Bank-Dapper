@@ -12,7 +12,7 @@ namespace leader.bank.domain.usecases.Gateways.Repositories
 
         Task<List<Transaction>> GetTransactionAsync();
 
-        Task<List<CustomerWithAccounts>> GetDoneTransactionAsync(int id);
+        //Task<List<CustomerWithAccounts>> GetDoneTransactionAsync(int id);
 
 
 

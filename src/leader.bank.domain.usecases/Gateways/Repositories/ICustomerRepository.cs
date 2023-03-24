@@ -19,5 +19,8 @@ namespace leader.bank.domain.usecases.Gateways.Repositories
 
         Task<CustomerWithAccountsOnly> GetCustomerWithAccountsAsync(int id);
 
+
+        Task<List<CustomerWithAccounts>> GetDoneTransactionAsync(int id);
+
     }
 }

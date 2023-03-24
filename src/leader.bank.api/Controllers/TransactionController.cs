@@ -36,12 +36,12 @@ namespace leader.bank.api.Controllers
         }
 
 
-        [HttpGet("{id:int}")]
+        //[HttpGet("{id:int}")]
 
-        public async Task<List<CustomerWithAccounts>>Get_DoneTransaction_By_AccountAndCardAsync(int id)
-        {
-            return await _transactionUseCase.GetDoneTransactionById(id);
-        }
+        //public async Task<List<CustomerWithAccounts>>Get_DoneTransaction_By_AccountAndCardAsync(int id)
+        //{
+        //    return await _transactionUseCase.GetDoneTransactionById(id);
+        //}
 
 
 

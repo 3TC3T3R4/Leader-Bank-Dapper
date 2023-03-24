@@ -53,5 +53,17 @@ namespace leader.bank.api.Controllers
         }
 
 
+
+
+        [HttpGet("{id:int}")]
+        //[Route("GetCustomerWithAccountsAndCardsAndTransactions")]
+        public async Task<List<CustomerWithAccounts>> Get_DoneTransaction_By_AccountAndCardAsync(int id)
+        {
+            return await _customerUseCase.GetDoneTransactionById(id);
+
+        }
+
+
+
     }
 }

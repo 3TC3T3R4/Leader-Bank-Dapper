@@ -39,5 +39,14 @@ namespace leader.bank.domain.usecases.UseCases
         {
             return await _customerRepository.GetCustomerWithAccountsAsync(id);
         }
+
+        public async Task<List<CustomerWithAccounts>> GetDoneTransactionById(int id)
+        {
+            return await _customerRepository.GetDoneTransactionAsync(id);
+        }
+
+
+
+
     }
 }
