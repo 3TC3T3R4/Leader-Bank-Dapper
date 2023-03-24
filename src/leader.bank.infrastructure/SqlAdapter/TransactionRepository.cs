@@ -2,7 +2,6 @@
 using Dapper;
 using leader.bank.domain.Commands;
 using leader.bank.domain.Entities;
-using leader.bank.domain.Entities.Wrappers;
 using leader.bank.domain.usecases.Gateways.Repositories;
 using leader.bank.infrastructure.Gateway;
 using Microsoft.IdentityModel.Tokens;
@@ -14,12 +13,8 @@ namespace leader.bank.infrastructure.SqlAdapter
 
         private readonly IDbConnectionBuilder _dbConnectionBuilder;
         private readonly IMapper _mapper;
-        private readonly string tableName = "Transactions";
-        private readonly string tableName2 = "Accounts";
-        private readonly string tableName3 = "Cards";
-        private readonly string tableName4 = "Customers";
-
-
+        private readonly string _tableNameTransac = "Transactions";
+        private readonly string _tableNameAccount = "Accounts";
 
         public TransactionRepository(IDbConnectionBuilder dbConnectionBuilder, IMapper mapper)
         {
@@ -30,23 +25,26 @@ namespace leader.bank.infrastructure.SqlAdapter
         public async Task<List<Transaction>> GetTransactionAsync()
         {
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
-            string sqlQuery = $"SELECT * FROM {tableName}";
-            var result = await connection.QueryAsync<Transaction>(sqlQuery);
-            if
-          (
-              result.IsNullOrEmpty()
-          )
+            string sqlQuery = $"SELECT * FROM {_tableNameTransac}";
+            var transactions = await connection.QueryAsync<Transaction>(sqlQuery);
+
+            if (transactions.IsNullOrEmpty())
             {
-                throw new Exception("No records found");
+                throw new Exception("There aren't transactions to show.");
             }
+
             connection.Close();
-            return result.ToList();
+            return transactions.ToList();
         }
 
 
         public async Task<InsertNewTransaction> CreateTransactionAsync(Transaction transaction)
         {
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
+
+            //verify that the account exists and it balance
+            var sqlAccount = $"SELECT * FROM {_tableNameAccount} WHERE Account_Id = {transaction.Id_Account}";
+            var accountToUpdate = await connection.QuerySingleAsync<Account>(sqlAccount) ?? throw new Exception("The account doesn't exist");
 
             var transactionAAgregar = new Transaction
             {
@@ -56,14 +54,60 @@ namespace leader.bank.infrastructure.SqlAdapter
                 TransactionType = transaction.TransactionType,
                 Description = transaction.Description,
                 Amount = transaction.Amount,
-                OldBalance = transaction.OldBalance,
-                FinalBalance = transaction.FinalBalance,
+                OldBalance = accountToUpdate.Balance,
                 TransactionState = transaction.TransactionState
             };
+            switch (transactionAAgregar.TransactionType)
+            {
+                case "Deposito":
+                    transactionAAgregar.FinalBalance = transactionAAgregar.OldBalance + transactionAAgregar.Amount;
+                    break;
+                case "Retiro":
+                    if (transactionAAgregar.OldBalance >= transactionAAgregar.Amount)
+                    {
+                        transactionAAgregar.FinalBalance = transactionAAgregar.OldBalance - transactionAAgregar.Amount;
+                    }
+                    else
+                    {
+                        throw new Exception("There isn't enough money.");
+                    }
+                    break;
+                case "Pago":
+                    if (transactionAAgregar.OldBalance >= transactionAAgregar.Amount)
+                    {
+                        transactionAAgregar.FinalBalance = transactionAAgregar.OldBalance - transactionAAgregar.Amount;
+                    }
+                    else
+                    {
+                        throw new Exception("There isn't enough money.");
+                    }
+                    break;
+            }
+
             Transaction.Validate(transactionAAgregar);
 
-            string sqlQuery = $"INSERT INTO {tableName} (Id_Account, TransactionDate,TransactionHour,TransactionType,Description,Amount,OldBalance,FinalBalance,TransactionState)VALUES(@idAccount, @transactionDate, @transactionHour,@transacitonType,@description,@amount,@oldBalance,@finalBalance,@transactionState)";
-            var rows = await connection.ExecuteAsync(sqlQuery, transactionAAgregar);
+            //update the account balance
+            var sqlUpdate = $"UPDATE {_tableNameAccount} SET Balance = {transactionAAgregar.FinalBalance} " +
+                $"WHERE Account_Id = {transactionAAgregar.Id_Account}";
+
+            var accountUpdated = await connection.ExecuteAsync(sqlUpdate);
+
+            if (accountUpdated != 1)
+            {
+                throw new Exception("The account was not updated.");
+            }
+
+            string sqlQuery = $"INSERT INTO {_tableNameTransac} (Id_Account, TransactionDate, TransactionHour, TransactionType, " +
+                $"Description, Amount,OldBalance, FinalBalance, TransactionState) " +
+                $"VALUES (@Id_Account, @TransactionDate, @TransactionHour, @TransactionType, @Description, @Amount, @OldBalance, " +
+                $"@FinalBalance, @TransactionState)";
+            var transactionCreated = await connection.ExecuteAsync(sqlQuery, transactionAAgregar);
+
+            if (transactionCreated != 1)
+            {
+                throw new Exception("The transaction was not created.");
+            }
+
             return _mapper.Map<InsertNewTransaction>(transaction);
         }
 

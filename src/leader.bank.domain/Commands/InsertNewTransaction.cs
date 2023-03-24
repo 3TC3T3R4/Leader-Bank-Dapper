@@ -12,8 +12,6 @@ namespace leader.bank.domain.Commands
         public string TransactionType { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
-        public decimal OldBalance { get; set; }
-        public decimal FinalBalance { get; set; }
         public string TransactionState { get; set; }
 
     }
