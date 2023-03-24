@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace leader.bank.test.NewFolder
+namespace leader.bank.test.CustomerTests
 {
     public class CustomerRepositoryTest
     {
