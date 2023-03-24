@@ -16,7 +16,7 @@ namespace leader.bank.domain.usecases.Gateways
 
         Task<List<Transaction>> GetTransaction();
 
-        Task<List<CustomerWithAccounts>>GetDoneTransactionById(int id);
+        //Task<List<CustomerWithAccounts>>GetDoneTransactionById(int id);
 
 
 
