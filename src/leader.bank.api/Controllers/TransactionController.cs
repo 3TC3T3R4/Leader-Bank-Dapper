@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using leader.bank.domain.Commands;
 using leader.bank.domain.Entities;
+using leader.bank.domain.Entities.Wrappers;
 using leader.bank.domain.usecases.Gateways;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,5 +34,16 @@ namespace leader.bank.api.Controllers
         {
             return await _transactionUseCase.AddTransaction(_mapper.Map<Transaction>(command));
         }
+
+
+        [HttpGet("{id:int}")]
+
+        public async Task<List<CustomerWithAccounts>>Get_DoneTransaction_By_AccountAndCardAsync(int id)
+        {
+            return await _transactionUseCase.GetDoneTransactionById(id);
+        }
+
+
+
     }
 }

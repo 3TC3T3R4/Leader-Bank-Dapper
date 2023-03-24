@@ -1,5 +1,6 @@
 ﻿using leader.bank.domain.Commands;
 using leader.bank.domain.Entities;
+using leader.bank.domain.Entities.Wrappers;
 using leader.bank.domain.usecases.Gateways;
 using leader.bank.domain.usecases.Gateways.Repositories;
 using System;
@@ -28,6 +29,11 @@ namespace leader.bank.domain.usecases.UseCases
             return await _transactionRepository.CreateTransactionAsync(transaction);
 
 
+        }
+
+        public async Task<List<CustomerWithAccounts>> GetDoneTransactionById(int id)
+        {
+            return await _transactionRepository.GetDoneTransactionAsync(id);
         }
 
         public async Task<List<Transaction>> GetTransaction() {

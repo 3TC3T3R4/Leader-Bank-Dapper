@@ -2,6 +2,7 @@
 using Dapper;
 using leader.bank.domain.Commands;
 using leader.bank.domain.Entities;
+using leader.bank.domain.Entities.Wrappers;
 using leader.bank.domain.usecases.Gateways.Repositories;
 using leader.bank.infrastructure.Gateway;
 
@@ -13,6 +14,11 @@ namespace leader.bank.infrastructure.SqlAdapter
         private readonly IDbConnectionBuilder _dbConnectionBuilder;
         private readonly IMapper _mapper;
         private readonly string tableName = "Transactions";
+        private readonly string tableName2 = "Accounts";
+        private readonly string tableName3 = "Cards";
+        private readonly string tableName4 = "Customers";
+
+
 
         public TransactionRepository(IDbConnectionBuilder dbConnectionBuilder, IMapper mapper)
         {
@@ -52,10 +58,34 @@ namespace leader.bank.infrastructure.SqlAdapter
             return _mapper.Map<InsertNewTransaction>(transaction);
         }
 
+        public async Task<List<CustomerWithAccounts>> GetDoneTransactionAsync(int id){
+            var connection = await _dbConnectionBuilder.CreateConnectionAsync();
+            var sqlQuery = $"SELECT  *  FROM {tableName4} cus " +
+                $"INNER JOIN  {tableName2} ac " +
+                $"ON  cus.Customer_Id  = ac.Id_Customer " +
+                 $" INNER JOIN {tableName3} car " +
+                 $" ON ac.Account_Id = car.Id_Account " +
+                 $"INNER JOIN {tableName} tra " +
+                 $"ON  tra.Id_Account = ac.Account_Id " +
+                $"WHERE  cus.Customer_Id = @id";
+            var customer = await connection.QueryAsync<CustomerWithAccounts,AccountWithCardAndTransactions,Card,Transaction, CustomerWithAccounts>(sqlQuery, (cwc,act ,card,t) =>
+               {
+                   cwc.Accounts = new List<AccountWithCardAndTransactions>();
+                   cwc.Accounts.Add(act);
+                   act.Card = card;
+                   act.Transactions = new List<Transaction>();
+                   act.Transactions.Add(t);
 
 
 
+                   return cwc;
 
+               },
+           new { id },
+           splitOn: "Account_Id , Card_Id , Transaction_Id");
+            connection.Close();
+            return  customer.ToList();
 
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using leader.bank.domain.Commands;
 using leader.bank.domain.Entities;
+using leader.bank.domain.Entities.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace leader.bank.domain.usecases.Gateways
         Task<InsertNewTransaction> AddTransaction(Transaction transaction);
 
         Task<List<Transaction>> GetTransaction();
+
+        Task<List<CustomerWithAccounts>>GetDoneTransactionById(int id);
 
 
 
