@@ -45,39 +45,39 @@ namespace leader.bank.test.NewFolder
 
         }
 
-        //[Fact]
-        //public async Task<InsertNewCustomer> CreateCustomerAsync(Customer customer)
-        //{
-        //    //arrange
-        //    var newCustomer = new InsertNewCustomer
-        //    {
-        //        Names = "Santiago Baquero",
-        //        Surnames = "Perez",
-        //        Address = "Calle 1",
-        //        Email = "",
-        //        Phone = "123456789",
-        //        Birthdate = DateTime.Now,
-        //        Occupation = "cajero",
-        //        Gender = "M"               
-        //    };
-        //    var customerCreated = new InsertNewCustomer
-        //    {
-        //        Names = "Santiago Baquero",
-        //        Surnames = "Perez",
-        //        Address = "Calle 1",
-        //        Email = "",
-        //        Phone = "123456789",
-        //        Birthdate = DateTime.Now,
-        //        Occupation = "cajero",
-        //        Gender = "M"
+        [Fact]
+        public async Task CreateCustomerAsync()
+        {
+            //arrange
+            var newCustomer = new Customer
+            {
+                Names = "Santiago Baquero",
+                Surnames = "Perez",
+                Address = "Calle 1",
+                Email = "",
+                Phone = "123456789",
+                Birthdate = DateTime.Now,
+                Occupation = "cajero",
+                Gender = "M"
+            };
+            var customerCreated = new InsertNewCustomer
+            {
+                Names = "Santiago Baquero",
+                Surnames = "Perez",
+                Address = "Calle 1",
+                Email = "",
+                Phone = "123456789",
+                Birthdate = DateTime.Now,
+                Occupation = "cajero",
+                Gender = "M"
 
-        //    };
-        //    _mockCustomerRepository.Setup(x => x.CreateCustomerAsync(newCustomer)).ReturnsAsync(customerCreated);
-        //    //act
-        //    var result = await _mockCustomerRepository.Object.CreateCustomerAsync(customerToCreate);
-        //    //assert
-        //    Assert.Equal(customerCreated, result);
-        //}
+            };
+            _mockCustomerRepository.Setup(x => x.CreateCustomerAsync(newCustomer)).ReturnsAsync(customerCreated);
+            //act
+            var result = await _mockCustomerRepository.Object.CreateCustomerAsync(newCustomer);
+            //assert
+            Assert.Equal(customerCreated, result);
+        }
 
 
 
