@@ -82,7 +82,6 @@ namespace leader.bank.test.CustomerTests
 
 
         [Fact]
-
         public async Task GetCustomerWithAccountAndCard()
         {
             //arrange
@@ -143,12 +142,52 @@ namespace leader.bank.test.CustomerTests
             Assert.Equal(customerWithAccountAndCardList, result);
         }
 
-        [Fact]
+        [Fact]        
+        public async Task CustomerWithAccountsOnly()
+        {
+            //arrange
+            var customer = new Customer
+            {
+                Names = "Juan",
+                Surnames = "Perez",
+                Address = "Calle 1",
+                Email = "",
+                Phone = "123456789",
+                Birthdate = DateTime.Now,
+                Occupation = "asesor",
+                Gender = "M"
+            };
+            var account = new Account
+            {
+                Account_Id = 1,
+                Id_Customer = 1,
+                AccountType = "Ahorros",
+                Balance = 1000,
+                OpenDate = DateTime.Now,
+                CloseDate = null,
+                ManagementCost = 0,
+                AccountState = "Activo"
 
+            };
+            var customerWithAccount = new CustomerWithAccountsOnly
+            {
+                Customer_id = 1,
+                Names = "Juan",
+                Surnames = "Perez",
+                Address = "Calle 1",
+                Email = "",
+                Phone = "123456789",
+                Birthdate = DateTime.Now,
+                Occupation = "asesor",
 
-        
-
-
+            };           
+            _mockCustomerRepository.Setup(x => x.GetCustomerWithAccountsAsync(1)).ReturnsAsync(customerWithAccount);
+            //act
+            var result = await _mockCustomerRepository.Object.GetCustomerWithAccountsAsync(1);
+            //assert
+            Assert.NotNull(result);
+            Assert.Equal(customerWithAccount, result);
+        }
 
     }
 
