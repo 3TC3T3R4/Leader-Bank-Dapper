@@ -3,11 +3,6 @@ using leader.bank.domain.Entities;
 using leader.bank.domain.Entities.Wrappers;
 using leader.bank.domain.usecases.Gateways.Repositories;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace leader.bank.test.CustomerTests
 {
@@ -85,39 +80,39 @@ namespace leader.bank.test.CustomerTests
         public async Task GetCustomerWithAccountAndCard()
         {
             //arrange
-            var customer = new Customer
-            {
-                Names = "Juan",
-                Surnames = "Perez",
-                Address = "Calle 1",
-                Email = "",
-                Phone = "123456789",
-                Birthdate = DateTime.Now,
-                Occupation = "asesor",
-                Gender = "M"
-            };
-            var account = new Account
-            {
-                Account_Id = 1,
-                Id_Customer = 1,
-                AccountType = "Ahorros",
-                Balance = 1000,
-                OpenDate = DateTime.Now,
-                CloseDate = null,
-                ManagementCost = 0,
-                AccountState = "Activo"
+            //var customer = new Customer
+            //{
+            //    Names = "Juan",
+            //    Surnames = "Perez",
+            //    Address = "Calle 1",
+            //    Email = "",
+            //    Phone = "123456789",
+            //    Birthdate = DateTime.Now,
+            //    Occupation = "asesor",
+            //    Gender = "M"
+            //};
+            //var account = new Account
+            //{
+            //    Account_Id = 1,
+            //    Id_Customer = 1,
+            //    AccountType = "Ahorros",
+            //    Balance = 1000,
+            //    OpenDate = DateTime.Now,
+            //    CloseDate = null,
+            //    ManagementCost = 0,
+            //    AccountState = "Activo"
 
-            };
-            var card = new Card
-            {
-                Card_Id = 1,
-                Id_Account = 1,
-                NumberCard = "123123",
-                Cvc = "123",
-                EmissionDate = DateTime.Now,
-                ExpirationDate = DateTime.Now,
-                CardState = "Activo"
-            };
+            //};
+            //var card = new Card
+            //{
+            //    Card_Id = 1,
+            //    Id_Account = 1,
+            //    NumberCard = "123123",
+            //    Cvc = "123",
+            //    EmissionDate = DateTime.Now,
+            //    ExpirationDate = DateTime.Now,
+            //    CardState = "Activo"
+            //};
 
             var customerWithAccountAndCard = new CustomerWithAccountAndCard
             {
@@ -130,19 +125,16 @@ namespace leader.bank.test.CustomerTests
                 Birthdate = DateTime.Now,
                 Occupation = "asesor",
                 Gender = "M"
-
-
             };
-            var customerWithAccountAndCardList = new List<CustomerWithAccountAndCard> { customerWithAccountAndCard };
-            _mockCustomerRepository.Setup(x => x.GetCustomerWithAccountAndCard(1)).ReturnsAsync(customerWithAccountAndCardList);
+            _mockCustomerRepository.Setup(x => x.GetCustomerWithAccountAndCard(1)).ReturnsAsync(customerWithAccountAndCard);
             //act
             var result = await _mockCustomerRepository.Object.GetCustomerWithAccountAndCard(1);
             //assert
             Assert.NotNull(result);
-            Assert.Equal(customerWithAccountAndCardList, result);
+            Assert.Equal(customerWithAccountAndCard, result);
         }
 
-        [Fact]        
+        [Fact]
         public async Task CustomerWithAccountsOnly()
         {
             //arrange
@@ -180,7 +172,7 @@ namespace leader.bank.test.CustomerTests
                 Birthdate = DateTime.Now,
                 Occupation = "asesor",
 
-            };           
+            };
             _mockCustomerRepository.Setup(x => x.GetCustomerWithAccountsAsync(1)).ReturnsAsync(customerWithAccount);
             //act
             var result = await _mockCustomerRepository.Object.GetCustomerWithAccountsAsync(1);

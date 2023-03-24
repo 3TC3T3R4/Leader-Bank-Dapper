@@ -6,7 +6,7 @@ using Moq;
 
 namespace leader.bank.test.TransactionTets
 {
-   public class TransactionRepositoryTest
+    public class TransactionRepositoryTest
     {
         private readonly Mock<ITransactionRepository> _mockTransactionRepository;
 
@@ -16,9 +16,11 @@ namespace leader.bank.test.TransactionTets
         }
 
         [Fact]
-        public async Task GetTransactionAsync(){
+        public async Task GetTransactionAsync()
+        {
             //Arrange
-            var transaction = new Transaction{
+            var transaction = new Transaction
+            {
                 Id_Account = 3,
                 TransactionDate = "02/23/2023",
                 TransactionHour = "14:21",
@@ -26,7 +28,7 @@ namespace leader.bank.test.TransactionTets
                 Description = "Retiro para mercar",
                 Amount = 0,
                 OldBalance = 0,
-                FinalBalance =0,
+                FinalBalance = 0,
                 TransactionState = "Aprobada"
             };
             var transactionList = new List<Transaction> { transaction };
@@ -63,8 +65,6 @@ namespace leader.bank.test.TransactionTets
                 TransactionType = "Retiro",
                 Description = "Retiro para mercar",
                 Amount = 0,
-                OldBalance = 0,
-                FinalBalance = 0,
                 TransactionState = "Aprobada"
 
             };
