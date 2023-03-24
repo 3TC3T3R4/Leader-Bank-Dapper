@@ -133,7 +133,8 @@ namespace leader.bank.infrastructure.SqlAdapter
                  $" ON ac.Account_Id = car.Id_Account " +
                  $"INNER JOIN {tableName} tra " +
                  $"ON  tra.Id_Account = ac.Account_Id " +
-                $"WHERE  cus.Customer_Id = @id";
+                $"WHERE  cus.Customer_Id = @id" +
+                $"GROUP BY cus.Customer_Id";
             var customer = await connection.QueryAsync<CustomerWithAccounts, AccountWithCardAndTransactions, Card, Transaction, CustomerWithAccounts>(sqlQuery, (cwc, act, card, t) =>
             {
                 cwc.Accounts = new List<AccountWithCardAndTransactions>();
