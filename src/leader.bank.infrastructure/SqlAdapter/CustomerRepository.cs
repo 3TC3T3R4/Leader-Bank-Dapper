@@ -2,15 +2,10 @@
 using Dapper;
 using leader.bank.domain.Commands;
 using leader.bank.domain.Entities;
+using leader.bank.domain.Entities.Wrappers;
 using leader.bank.domain.usecases.Gateways.Repositories;
 using leader.bank.infrastructure.Gateway;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace leader.bank.infrastructure.SqlAdapter
 {
@@ -18,10 +13,10 @@ namespace leader.bank.infrastructure.SqlAdapter
     {
 
         private readonly IDbConnectionBuilder _dbConnectionBuilder;
-        private readonly string tableName = "customers";
+        private readonly string tableName = "Customers";
         private readonly IMapper _mapper;
 
-        public CustomerRepository(IDbConnectionBuilder dbConnectionBuilder, IMapper mapper )
+        public CustomerRepository(IDbConnectionBuilder dbConnectionBuilder, IMapper mapper)
         {
             _dbConnectionBuilder = dbConnectionBuilder;
             _mapper = mapper;
@@ -43,18 +38,10 @@ namespace leader.bank.infrastructure.SqlAdapter
             return result.ToList();
         }
 
-        public async Task<Customer> GetCustomerByIdAsync(int id)
-        {
-            var connection = await _dbConnectionBuilder.CreateConnectionAsync();
-            string sqlQuery = $"SELECT * FROM {tableName} WHERE Customer_id = @Customer_id";
-            var result = await connection.QuerySingleAsync<Customer>(sqlQuery, new { id });
-            connection.Close();
-            return result;
-        }
         public async Task<InsertNewCustomer> CreateCustomerAsync(Customer customer)
         {
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
-            var createCustomer = new Customer                     
+            var createCustomer = new Customer
             {
                 Names = customer.Names,
                 Surnames = customer.Surnames,
@@ -64,7 +51,7 @@ namespace leader.bank.infrastructure.SqlAdapter
                 Birthdate = customer.Birthdate,
                 Occupation = customer.Occupation,
                 Gender = customer.Gender
-               
+
             };
             Customer.Validate(createCustomer);
 
@@ -75,5 +62,58 @@ namespace leader.bank.infrastructure.SqlAdapter
 
         }
 
+        public async Task<List<CustomerWithAccountAndCard>> GetCustomerWithAccountAndCard(int id)
+        {
+            var connection = await _dbConnectionBuilder.CreateConnectionAsync();
+            string sqlQuery = $"SELECT * FROM {tableName} cus " +
+                                $"INNER JOIN Accounts a ON a.Id_Customer = @id " +
+                                $"INNER JOIN Cards c ON c.Id_Account = a.Account_Id " +
+                                $"WHERE cus.Customer_Id = @id";
+            var customer = await connection.QueryAsync<CustomerWithAccountAndCard, AccountWithCardOnly,
+                Card, CustomerWithAccountAndCard>(sqlQuery, (c, a, card) =>
+            {
+                c.Account = a;
+                c.Account.Card = card;
+                return c;
+            },
+            new { id },
+            splitOn: "Account_Id, Card_Id");
+
+            if (customer.IsNullOrEmpty())
+            {
+                throw new Exception("The customer doesn't exist.");
+            }
+            connection.Close();
+            return customer.ToList();
+        }
+
+
+        public async Task<CustomerWithAccountsOnly> GetCustomerWithAccountsAsync(int id)
+        {
+            var connection = await _dbConnectionBuilder.CreateConnectionAsync();
+            var customerQuery = $"SELECT * FROM {tableName} WHERE Customer_Id = @id";
+            var accountQuery = $"SELECT * FROM Accounts WHERE Id_Customer = @id";
+            var multiQuery = $"{customerQuery};{accountQuery}";
+
+            using (var multi = await connection.QueryMultipleAsync(multiQuery, new { id }))
+            {
+                var customer = await multi.ReadFirstOrDefaultAsync<Customer>();
+                var accounts = await multi.ReadAsync<Account>();
+
+                return new CustomerWithAccountsOnly
+                {
+                    Customer_id = customer.Customer_Id,
+                    Names = customer.Names,
+                    Surnames = customer.Surnames,
+                    Address = customer.Address,
+                    Email = customer.Email,
+                    Phone = customer.Phone,
+                    Birthdate = customer.Birthdate,
+                    Occupation = customer.Occupation,
+                    Gender = customer.Gender,
+                    Accounts = accounts.ToList()
+                };
+            }
+        }
     }
 }
