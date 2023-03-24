@@ -81,7 +81,7 @@ namespace leader.bank.infrastructure.SqlAdapter
 
             if (customer.IsNullOrEmpty())
             {
-                throw new Exception("The customer doesn't exist.");
+                throw new Exception("The customer doesn't exist or doesn't have an account or card assigned.");
             }
             connection.Close();
             return customer.ToList();
