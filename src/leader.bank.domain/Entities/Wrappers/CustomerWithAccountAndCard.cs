@@ -18,6 +18,6 @@ namespace leader.bank.domain.Entities.Wrappers
         public string Occupation { get; set; }
         public string Gender { get; set; }
 
-        public AccountWithCardOnly Account { get; set; }
+        public List<AccountWithCardOnly> Accounts { get; set; } = new();
     }
 }

@@ -39,7 +39,7 @@ namespace leader.bank.api.Controllers
 
         [HttpGet]
         [Route("GetCustomerWithAccountAndCard")]
-        public async Task<List<CustomerWithAccountAndCard>> GetCustomerWithAccountAndCard(int id)
+        public async Task<CustomerWithAccountAndCard> GetCustomerWithAccountAndCard(int id)
         {
             return await _customerUseCase.GetCustomerWithAccountAndCard(id);
         }
@@ -52,18 +52,12 @@ namespace leader.bank.api.Controllers
             return await _customerUseCase.GetCustomerWithAccountsAsync(id);
         }
 
-
-
-
-        [HttpGet("{id:int}")]
+        [HttpGet("GetCustomerWithAccount,Card,Transactions")]
         //[Route("GetCustomerWithAccountsAndCardsAndTransactions")]
-        public async Task<List<CustomerWithAccounts>> Get_DoneTransaction_By_AccountAndCardAsync(int id)
+        public async Task<CustomerWithAccounts> Get_DoneTransaction_By_AccountAndCardAsync(int id)
         {
             return await _customerUseCase.GetDoneTransactionById(id);
 
         }
-
-
-
     }
 }

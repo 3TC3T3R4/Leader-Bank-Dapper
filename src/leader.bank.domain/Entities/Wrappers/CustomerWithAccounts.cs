@@ -11,6 +11,6 @@
         public DateTime Birthdate { get; set; }
         public string Occupation { get; set; }
         public string Gender { get; set; }
-        public List<AccountWithCardAndTransactions> Accounts { get; set; } 
+        public List<AccountWithCardAndTransactions> Accounts { get; set; } = new List<AccountWithCardAndTransactions>();
     }
 }

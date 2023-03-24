@@ -25,7 +25,7 @@ namespace leader.bank.domain.usecases.UseCases
             return await _customerRepository.GetCustomersAsync();
         }
 
-        public async Task<List<CustomerWithAccountAndCard>> GetCustomerWithAccountAndCard(int id)
+        public async Task<CustomerWithAccountAndCard> GetCustomerWithAccountAndCard(int id)
         {
             return await _customerRepository.GetCustomerWithAccountAndCard(id);
         }
@@ -40,7 +40,7 @@ namespace leader.bank.domain.usecases.UseCases
             return await _customerRepository.GetCustomerWithAccountsAsync(id);
         }
 
-        public async Task<List<CustomerWithAccounts>> GetDoneTransactionById(int id)
+        public async Task<CustomerWithAccounts> GetDoneTransactionById(int id)
         {
             return await _customerRepository.GetDoneTransactionAsync(id);
         }

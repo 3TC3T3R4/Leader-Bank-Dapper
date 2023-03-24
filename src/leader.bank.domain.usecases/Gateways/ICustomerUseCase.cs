@@ -14,15 +14,12 @@ namespace leader.bank.domain.usecases.Gateways
     {
         Task<List<Customer>> GetCustomersAsync();
 
-        Task<List<CustomerWithAccountAndCard>> GetCustomerWithAccountAndCard(int id);
+        Task<CustomerWithAccountAndCard> GetCustomerWithAccountAndCard(int id);
 
         Task<InsertNewCustomer> CreateCustomerAsync(Customer customer);
 
         Task<CustomerWithAccountsOnly> GetCustomerWithAccountsAsync(int id);
 
-
-        Task<List<CustomerWithAccounts>> GetDoneTransactionById(int id);
-
-
+        Task<CustomerWithAccounts> GetDoneTransactionById(int id);
     }
 }

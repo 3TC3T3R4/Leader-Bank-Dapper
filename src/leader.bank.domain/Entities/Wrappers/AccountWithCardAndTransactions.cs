@@ -16,7 +16,6 @@ namespace leader.bank.domain.Entities.Wrappers
         public decimal ManagementCost { get; set; }
         public string AccountState { get; set; }
         public Card Card { get; set; }
-        public List<Transaction> Transactions { get; set; }
-
+        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }
